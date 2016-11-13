@@ -43,8 +43,8 @@
 
 <body id="bodylight">
     <div id="tooltiplight" class="hidden">
-        <p><strong id="score">Hello</strong></p>
-        <p id="date">tooltip</p>
+        <p><strong id="date">Hello</strong></p>
+        <p id="score">tooltip</p>
     </div>
     <script>
         var w = 900;
@@ -96,7 +96,7 @@
             })]).range([5, 20]);
             var fScale = d3.scale.category20();
             //開始畫圈圈
-            d3.selectAll("circle").attr({
+            d3.selectAll("circle").transition().duration(1000).attr({
                 cx: function (d) {
                     return xScale(new Date(d.date));
                 },
@@ -109,7 +109,8 @@
                 fill: function (d) {
                     return fScale(letterList.indexOf(d.cid));
                 }
-            }).on("mouseover", function (d) {
+            });
+            d3.selectAll("circle").on("mouseover", function (d) {
                 var xPos = parseFloat(d3.select(this).attr("cx")) + 12;
                 var yPos = parseFloat(d3.select(this).attr("cy")) + 12;
                 d3.select("#tooltiplight").style({
